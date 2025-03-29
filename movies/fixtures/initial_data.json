@@ -1,0 +1,90 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "admin",
+      "password": "pbkdf2_sha256$260000$fakeadminhash",
+      "is_superuser": true,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "moderator",
+      "password": "pbkdf2_sha256$260000$fakemodhash",
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "user",
+      "password": "pbkdf2_sha256$260000$fakeuserhash",
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 1,
+    "fields": {
+      "title": "Inception",
+      "description": "A mind-bending thriller.",
+      "release_date": "2010-07-16"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 2,
+    "fields": {
+      "title": "Interstellar",
+      "description": "Exploring space and time.",
+      "release_date": "2014-11-07"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 3,
+    "fields": {
+      "title": "The Matrix",
+      "description": "Welcome to the real world.",
+      "release_date": "1999-03-31"
+    }
+  },
+  {
+    "model": "movies.review",
+    "pk": 1,
+    "fields": {
+      "user": 3,
+      "movie": 1,
+      "text": "Amazing movie!",
+      "created_at": "2025-03-25T12:00:00Z"
+    }
+  },
+  {
+    "model": "movies.rating",
+    "pk": 1,
+    "fields": {
+      "user": 3,
+      "movie": 1,
+      "score": 9
+    }
+  },
+  {
+    "model": "movies.rating",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "movie": 2,
+      "score": 8
+    }
+  }
+]
