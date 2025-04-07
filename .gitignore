@@ -1,29 +1,89 @@
-
 # Python
 __pycache__/
 *.py[cod]
+*.egg
 *.egg-info/
+*.pyo
+*.pyd
+
+# Virtual environments
+env/
+venv/
+ENV/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
 
 # Django
 *.log
 db.sqlite3
-/static/
-/media/
+media/
+static/
+staticfiles/
+*.pot
+*.pyc
 
-# Environments
+# Django migrations
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Environment variables
 .env
 .env.*
-
-# VS Code
-.vscode/
+*.env
 
 # PyCharm
 .idea/
 
-# OS
+# VSCode
+.vscode/
+
+# Mac OS
 .DS_Store
+
+# Windows
 Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*.swp
 
 # Docker
 *.pid
 *.sock
+*.tar
+docker-compose.override.yml
+
+# Coverage & testing
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+*.py,cover
+nosetests.xml
+test.db
+tests/__pycache__/
+
+# Reports
+*.log
+*.out
+*.err
+
+# Jupyter notebooks (если используешь)
+*.ipynb
+
+# GitHub Actions artifacts
+__tests__/tmp/
+build/
+dist/
+*.spec
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+
+# Sentry / monitoring (если вдруг логируешь отдельно)
+sentry-debug.log
