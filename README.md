@@ -82,7 +82,7 @@ docker-compose exec web python manage.py createsuperuser
 
 | Роль           | Логин | Пароль |
 |----------------|-------|--------|
-| Администратор  | test  | test   |
+| Администратор  | admin | admin  |
 
 ---
 
