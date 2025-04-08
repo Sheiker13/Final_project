@@ -3,6 +3,10 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -14,9 +18,6 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-from django.contrib import admin
-from django.urls import path, include
-
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -26,3 +27,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('movies.urls')),
 ]
+
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,36 +1,68 @@
+
 {% extends 'base.html' %}
+{% load movie_extras %}
 
 {% block content %}
-  <h1>{{ movie.title }}</h1>
-  <p>{{ movie.description }}</p>
-  <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
-
-  <h2>Reviews</h2>
-  {% for review in reviews %}
-    <div class="card mb-2">
-      <div class="card-body">
-        <p>{{ review.text }}</p>
-        <p class="text-muted">By {{ review.user.username }} on {{ review.created_at }}</p>
-        {% if user.is_authenticated and user == review.user or user.is_superuser %}
-          <form method="post" action="{% url 'delete_review' review.id %}">
-            {% csrf_token %}
-            <button class="btn btn-danger btn-sm">Delete</button>
-          </form>
-        {% endif %}
-      </div>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      {% if movie.image %}
+        <img src="{{ movie.image.url }}" alt="{{ movie.title }}" class="img-fluid rounded shadow">
+      {% else %}
+        <img src="https://via.placeholder.com/300x450?text=No+Image" alt="No image" class="img-fluid rounded shadow">
+      {% endif %}
     </div>
-  {% empty %}
-    <p>No reviews yet.</p>
-  {% endfor %}
+    <div class="col-md-8">
+      <h2>{{ movie.title }}</h2>
+      <p class="text-muted">{{ movie.release_date|date:"Y" }}</p>
+      <p>{{ movie.description }}</p>
+
+      <p><strong>Genres:</strong>
+        {% for genre in movie.genres.all %}
+          <span class="badge bg-secondary">{{ genre.name }}</span>
+        {% empty %}
+          <span>No genres specified.</span>
+        {% endfor %}
+      </p>
+
+      <p><strong>Average Rating:</strong>
+        {{ movie.ratings.all|average_rating }}/10
+      </p>
+
+      <hr>
+      <h5>Reviews:</h5>
+      {% for review in movie.reviews.all %}
+        <div class="border rounded p-2 mb-2">
+          <strong>{{ review.user.username }}</strong> — {{ review.created_at|date:"d M Y" }}<br>
+          {{ review.text }}
+        </div>
+      {% empty %}
+        <p>No reviews yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <a href="{% url 'movie_list' %}" class="btn btn-secondary mt-3">Back to catalog</a>
 
   {% if user.is_authenticated %}
-    <h3>Add a Review</h3>
-<form method="post" action="#">
+    <h3 class="mt-4">Add a Review</h3>
+    <form method="post" class="mb-4">
       {% csrf_token %}
       {{ form.as_p }}
-      <button class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-success">Add Review</button>
+    </form>
+
+    <h3 class="mt-4">Rate this movie</h3>
+    <form method="post" class="mb-4">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="id_score" class="form-label">Your rating (1–10)</label>
+        {{ rating_form.score }}
+      </div>
+      <button type="submit" class="btn btn-warning">Submit Rating</button>
     </form>
   {% else %}
-    <p><a href="/admin/login/">Login</a> to leave a review.</p>
+    <p><a href="{% url 'login' %}">Log in</a> to leave a review or rating.</p>
   {% endif %}
+</div>
 {% endblock %}

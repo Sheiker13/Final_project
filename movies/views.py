@@ -1,6 +1,7 @@
+
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Movie, Genre, Review
-from .forms import ReviewForm
+from .models import Movie, Genre, Review, Rating
+from .forms import ReviewForm, RatingForm
 
 def index(request):
     return render(request, 'index.html')
@@ -30,28 +31,39 @@ def movie_list(request):
 
 def movie_detail(request, pk):
     movie = get_object_or_404(Movie, pk=pk)
-    form = ReviewForm()
+    review_form = ReviewForm()
+    rating_form = RatingForm()
 
     if request.method == "POST":
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.movie = movie
-            review.user = request.user
-            review.save()
-            return redirect('movie_detail', pk=pk)
+        if 'text' in request.POST:
+            review_form = ReviewForm(request.POST)
+            if review_form.is_valid():
+                review = review_form.save(commit=False)
+                review.movie = movie
+                review.user = request.user
+                review.save()
+                return redirect('movie_detail', pk=pk)
+
+        if 'score' in request.POST:
+            rating_form = RatingForm(request.POST)
+            if rating_form.is_valid():
+                Rating.objects.update_or_create(
+                    user=request.user,
+                    movie=movie,
+                    defaults={'score': rating_form.cleaned_data['score']}
+                )
+                return redirect('movie_detail', pk=pk)
 
     return render(request, 'movie_detail.html', {
         'movie': movie,
-        'form': form,
+        'form': review_form,
+        'rating_form': rating_form,
     })
 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .forms import RegisterForm
-
 from django.contrib.auth import login
-from django.shortcuts import redirect
 
 class RegisterView(CreateView):
     template_name = "registration/register.html"

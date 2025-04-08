@@ -15,3 +15,13 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['text']
+
+from .models import Rating
+
+class RatingForm(forms.ModelForm):
+    class Meta:
+        model = Rating
+        fields = ['score']
+        widgets = {
+            'score': forms.NumberInput(attrs={'min': 1, 'max': 10, 'class': 'form-control'}),
+        }

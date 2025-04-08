@@ -3,6 +3,8 @@ from django import template
 register = template.Library()
 
 @register.filter
-def average(queryset, field_name):
-    values = [getattr(obj, field_name, 0) for obj in queryset]
-    return sum(values) / len(values) if values else 0
+def average_rating(ratings):
+    if not ratings.exists():
+        return "-"
+    total = sum(r.score for r in ratings)
+    return round(total / ratings.count(), 1)
