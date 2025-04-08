@@ -8,3 +8,4 @@ drf-yasg
 pytest
 pytest-django
 pytest-cov
+Pillow

@@ -11,7 +11,7 @@
       <div class="card-body">
         <p>{{ review.text }}</p>
         <p class="text-muted">By {{ review.user.username }} on {{ review.created_at }}</p>
-        {% if user.is_authenticated and (user == review.user or user.is_superuser) %}
+        {% if user.is_authenticated and user == review.user or user.is_superuser %}
           <form method="post" action="{% url 'delete_review' review.id %}">
             {% csrf_token %}
             <button class="btn btn-danger btn-sm">Delete</button>
@@ -25,7 +25,7 @@
 
   {% if user.is_authenticated %}
     <h3>Add a Review</h3>
-    <form method="post" action="{% url 'add_review' movie.id %}">
+<form method="post" action="#">
       {% csrf_token %}
       {{ form.as_p }}
       <button class="btn btn-primary">Submit</button>

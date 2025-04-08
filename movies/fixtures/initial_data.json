@@ -1,90 +1,377 @@
 [
-  {
-    "model": "auth.user",
-    "pk": 1,
-    "fields": {
-      "username": "admin",
-      "password": "pbkdf2_sha256$260000$fakeadminhash",
-      "is_superuser": true,
-      "is_staff": true,
-      "is_active": true
+    {
+        "model": "movies.customuser",
+        "pk": 1,
+        "fields": {
+            "username": "user3390",
+            "password": "pbkdf2_sha256$260000$demo$fakehash",
+            "is_superuser": true,
+            "is_staff": true,
+            "is_active": true,
+            "is_moderator": true,
+            "first_name": "Leo",
+            "last_name": "Smith"
+        }
+    },
+    {
+        "model": "movies.genre",
+        "pk": 1,
+        "fields": {
+            "name": "Action",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.genre",
+        "pk": 2,
+        "fields": {
+            "name": "Drama",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.rating",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "movie": 1,
+            "score": 9,
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.genre",
+        "pk": 1,
+        "fields": {
+            "name": "Action",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.genre",
+        "pk": 2,
+        "fields": {
+            "name": "Adventure",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.genre",
+        "pk": 3,
+        "fields": {
+            "name": "Crime",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.genre",
+        "pk": 4,
+        "fields": {
+            "name": "Drama",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.genre",
+        "pk": 5,
+        "fields": {
+            "name": "Romance",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.genre",
+        "pk": 6,
+        "fields": {
+            "name": "Sci-Fi",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.genre",
+        "pk": 7,
+        "fields": {
+            "name": "Thriller",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 1,
+        "fields": {
+            "title": "Inception",
+            "description": "A mind-bending thriller by Christopher Nolan.",
+            "release_date": "2010-01-01",
+            "image": "",
+            "genres": [
+                1,
+                4
+            ],
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.review",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "movie": 1,
+            "text": "Very emotional.",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 2,
+        "fields": {
+            "title": "The Matrix",
+            "description": "Neo discovers the truth about reality.",
+            "release_date": "1999-01-01",
+            "image": "",
+            "genres": [
+                6,
+                1
+            ],
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.review",
+        "pk": 2,
+        "fields": {
+            "user": 1,
+            "movie": 2,
+            "text": "Incredible visuals.",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 3,
+        "fields": {
+            "title": "Interstellar",
+            "description": "Explorers travel through a wormhole in space.",
+            "release_date": "2014-01-01",
+            "image": "",
+            "genres": [
+                6,
+                4
+            ],
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.review",
+        "pk": 3,
+        "fields": {
+            "user": 1,
+            "movie": 3,
+            "text": "Great acting and story.",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 4,
+        "fields": {
+            "title": "The Dark Knight",
+            "description": "Batman faces off with the Joker.",
+            "release_date": "2008-01-01",
+            "image": "",
+            "genres": [
+                1,
+                3
+            ],
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.review",
+        "pk": 4,
+        "fields": {
+            "user": 1,
+            "movie": 4,
+            "text": "A bit slow, but worth it.",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 5,
+        "fields": {
+            "title": "Pulp Fiction",
+            "description": "Tarantino\u2019s nonlinear crime masterpiece.",
+            "release_date": "1994-01-01",
+            "image": "",
+            "genres": [
+                3,
+                4
+            ],
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.review",
+        "pk": 5,
+        "fields": {
+            "user": 1,
+            "movie": 5,
+            "text": "Must watch.",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 6,
+        "fields": {
+            "title": "Fight Club",
+            "description": "An underground fight club spirals out of control.",
+            "release_date": "1999-01-01",
+            "image": "",
+            "genres": [
+                4,
+                7
+            ],
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.review",
+        "pk": 6,
+        "fields": {
+            "user": 1,
+            "movie": 6,
+            "text": "A bit slow, but worth it.",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 7,
+        "fields": {
+            "title": "The Shawshank Redemption",
+            "description": "A man's hope in prison changes lives.",
+            "release_date": "1994-01-01",
+            "image": "",
+            "genres": [
+                4
+            ],
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.review",
+        "pk": 7,
+        "fields": {
+            "user": 1,
+            "movie": 7,
+            "text": "Legendary film.",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 8,
+        "fields": {
+            "title": "Forrest Gump",
+            "description": "The life journey of a unique man.",
+            "release_date": "1994-01-01",
+            "image": "",
+            "genres": [
+                4,
+                5
+            ],
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.review",
+        "pk": 8,
+        "fields": {
+            "user": 1,
+            "movie": 8,
+            "text": "10/10",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 9,
+        "fields": {
+            "title": "Gladiator",
+            "description": "A Roman general seeks revenge.",
+            "release_date": "2000-01-01",
+            "image": "",
+            "genres": [
+                1,
+                2
+            ],
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.review",
+        "pk": 9,
+        "fields": {
+            "user": 1,
+            "movie": 9,
+            "text": "Very emotional.",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 10,
+        "fields": {
+            "title": "The Godfather",
+            "description": "The saga of a mafia family.",
+            "release_date": "1972-01-01",
+            "image": "",
+            "genres": [
+                3,
+                4
+            ],
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
+    },
+    {
+        "model": "movies.review",
+        "pk": 10,
+        "fields": {
+            "user": 1,
+            "movie": 10,
+            "text": "Amazing!",
+            "created_at": "2025-04-07T00:00:00",
+            "updated_at": "2025-04-07T00:00:00"
+        }
     }
-  },
-  {
-    "model": "auth.user",
-    "pk": 2,
-    "fields": {
-      "username": "moderator",
-      "password": "pbkdf2_sha256$260000$fakemodhash",
-      "is_superuser": false,
-      "is_staff": true,
-      "is_active": true
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 3,
-    "fields": {
-      "username": "user",
-      "password": "pbkdf2_sha256$260000$fakeuserhash",
-      "is_superuser": false,
-      "is_staff": false,
-      "is_active": true
-    }
-  },
-  {
-    "model": "movies.movie",
-    "pk": 1,
-    "fields": {
-      "title": "Inception",
-      "description": "A mind-bending thriller.",
-      "release_date": "2010-07-16"
-    }
-  },
-  {
-    "model": "movies.movie",
-    "pk": 2,
-    "fields": {
-      "title": "Interstellar",
-      "description": "Exploring space and time.",
-      "release_date": "2014-11-07"
-    }
-  },
-  {
-    "model": "movies.movie",
-    "pk": 3,
-    "fields": {
-      "title": "The Matrix",
-      "description": "Welcome to the real world.",
-      "release_date": "1999-03-31"
-    }
-  },
-  {
-    "model": "movies.review",
-    "pk": 1,
-    "fields": {
-      "user": 3,
-      "movie": 1,
-      "text": "Amazing movie!",
-      "created_at": "2025-03-25T12:00:00Z"
-    }
-  },
-  {
-    "model": "movies.rating",
-    "pk": 1,
-    "fields": {
-      "user": 3,
-      "movie": 1,
-      "score": 9
-    }
-  },
-  {
-    "model": "movies.rating",
-    "pk": 2,
-    "fields": {
-      "user": 2,
-      "movie": 2,
-      "score": 8
-    }
-  }
 ]

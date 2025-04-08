@@ -1,9 +1,70 @@
-
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load movie_extras %}
 
 {% block content %}
-  <h2>{{ movie.title }}</h2>
-  <p>{{ movie.description }}</p>
-  <p><strong>Release Year:</strong> {{ movie.release_year }}</p>
-  <a href="{% url 'movie_list' %}" class="btn btn-secondary mt-3">Назад к каталогу</a>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      {% if movie.image %}
+        <img src="{{ movie.image.url }}" alt="{{ movie.title }}" class="img-fluid rounded shadow">
+      {% else %}
+        <img src="https://via.placeholder.com/300x450?text=No+Image" alt="No image" class="img-fluid rounded shadow">
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <h2>{{ movie.title }}</h2>
+      <p class="text-muted">{{ movie.release_date|date:"Y" }}</p>
+      <p>{{ movie.description }}</p>
+
+      <p><strong>Genres:</strong>
+        {% for genre in movie.genres.all %}
+          <span class="badge bg-secondary">{{ genre.name }}</span>
+        {% empty %}
+          <span>No genres specified.</span>
+        {% endfor %}
+      </p>
+
+      <p><strong>Average Rating:</strong>
+        {% if movie.ratings.all %}
+          {{ movie.ratings.all|average:"score"|floatformat:1 }}
+        {% else %}
+          No ratings yet.
+        {% endif %}
+      </p>
+
+      <hr>
+      <h5>Reviews:</h5>
+      {% for review in movie.reviews.all %}
+        <div class="border rounded p-2 mb-2">
+          <strong>{{ review.user.username }}</strong> — {{ review.created_at|date:"d M Y" }}<br>
+          {{ review.text }}
+        </div>
+      {% empty %}
+        <p>No reviews yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+  <a href="{% url 'movie_list' %}" class="btn btn-secondary mt-3">Back to catalog</a>
+</div>
+
+<h3>Reviews</h3>
+<ul>
+    {% for review in movie.reviews.all %}
+        <li><strong>{{ review.user.username }}</strong>: {{ review.text }}</li>
+    {% empty %}
+        <li>No reviews yet.</li>
+    {% endfor %}
+</ul>
+
+{% if user.is_authenticated %}
+<form method="post" class="mt-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Add Review</button>
+</form>
+{% else %}
+<p><a href="{% url 'login' %}">Log in</a> to leave a review.</p>
+{% endif %}
+
 {% endblock %}
+

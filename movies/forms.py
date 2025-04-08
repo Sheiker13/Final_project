@@ -1,5 +1,15 @@
 from django import forms
-from .models import Review
+from django.contrib.auth.forms import UserCreationForm
+from .models import CustomUser, Review
+
+
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = CustomUser
+        fields = ("username", "email", "first_name", "last_name", "password1", "password2")
+
 
 class ReviewForm(forms.ModelForm):
     class Meta:

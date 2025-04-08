@@ -1,0 +1,52 @@
+[
+    {
+        "model": "movies.movie",
+        "pk": 1,
+        "fields": {
+            "title": "Inception",
+            "description": "A mind-bending thriller by Christopher Nolan.",
+            "release_date": "2010-07-16",
+            "poster": "posters/inception.jpg"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 2,
+        "fields": {
+            "title": "Interstellar",
+            "description": "A journey through space and time.",
+            "release_date": "2014-11-07",
+            "poster": "posters/interstellar.jpg"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 3,
+        "fields": {
+            "title": "Toy Story",
+            "description": "Toys come to life in this Pixar classic.",
+            "release_date": "1995-11-22",
+            "poster": "posters/toystory.jpg"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 4,
+        "fields": {
+            "title": "The Godfather",
+            "description": "The aging patriarch of an organized crime dynasty transfers control to his reluctant son.",
+            "release_date": "1972-03-24",
+            "poster": "posters/godfather.jpg"
+        }
+    },
+    {
+        "model": "movies.movie",
+        "pk": 5,
+        "fields": {
+            "title": "The Matrix",
+            "description": "A hacker discovers the shocking truth about his world.",
+            "release_date": "1999-03-31",
+            "poster": "posters/matrix.jpg"
+        }
+    }
+]

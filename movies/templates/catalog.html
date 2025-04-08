@@ -2,6 +2,28 @@
 {% extends "base.html" %}
 
 {% block content %}
+<form method="get" class="mb-4 d-flex gap-2">
+    <select name="genre" class="form-select w-auto">
+        <option value="">All genres</option>
+        {% for genre in genres %}
+            <option value="{{ genre.id }}" {% if selected_genre == genre.id|stringformat:"s" %}selected{% endif %}>
+                {{ genre.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <select name="year" class="form-select w-auto">
+        <option value="">All years</option>
+        {% for y in years %}
+            <option value="{{ y.year }}" {% if selected_year == y.year|stringformat:"s" %}selected{% endif %}>
+                {{ y.year }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
   <h2>Каталог фильмов</h2>
   <div class="row">
     {% for movie in movies %}
