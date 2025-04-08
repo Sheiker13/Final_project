@@ -1,4 +1,3 @@
-
 # 📘 Technical Documentation
 
 ## 🎬 Models Overview
