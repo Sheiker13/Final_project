@@ -13,58 +13,64 @@
     </div>
     <div class="col-md-8">
       <h2>{{ movie.title }}</h2>
-      <p class="text-muted">{{ movie.release_date|date:"Y" }}</p>
+      <p class="text-muted">Год: {{ movie.release_date|date:"Y" }}</p>
       <p>{{ movie.description }}</p>
 
-      <p><strong>Genres:</strong>
+      <p><strong>Жанры:</strong>
         {% for genre in movie.genres.all %}
           <span class="badge bg-secondary">{{ genre.name }}</span>
         {% empty %}
-          <span>No genres specified.</span>
+          <span>Жанры не указаны.</span>
         {% endfor %}
       </p>
 
-      <p><strong>Average Rating:</strong>
-        {% if movie.ratings.all %}
-          {{ movie.ratings.all|average:"score"|floatformat:1 }}
-        {% else %}
-          No ratings yet.
-        {% endif %}
+      <p><strong>Средняя оценка:</strong>
+        {{ movie.ratings.all|average_rating|default:"-" }}/10
       </p>
 
-      <hr>
-      <h5>Reviews:</h5>
-      {% for review in movie.reviews.all %}
-        <div class="border rounded p-2 mb-2">
-          <strong>{{ review.user.username }}</strong> — {{ review.created_at|date:"d M Y" }}<br>
-          {{ review.text }}
-        </div>
-      {% empty %}
-        <p>No reviews yet.</p>
-      {% endfor %}
+      {% if user.is_authenticated %}
+        <form method="post" action="" class="d-inline">
+          {% csrf_token %}
+          <button type="submit" name="favorite" class="btn btn-outline-danger">
+            <i class="bi bi-heart"></i> Добавить в избранное
+          </button>
+        </form>
+      {% endif %}
     </div>
   </div>
-  <a href="{% url 'movie_list' %}" class="btn btn-secondary mt-3">Back to catalog</a>
+
+  <hr>
+  <h4 class="mt-4">Отзывы</h4>
+  {% for review in movie.reviews.all %}
+    <div class="border rounded p-2 mb-2">
+      <strong>{{ review.user.username }}</strong> — {{ review.created_at|date:"d M Y" }}<br>
+      {{ review.text }}
+    </div>
+  {% empty %}
+    <p>Отзывов пока нет.</p>
+  {% endfor %}
+
+  {% if user.is_authenticated %}
+    <h5 class="mt-4">Оставить отзыв</h5>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Добавить</button>
+    </form>
+
+    <h5 class="mt-4">Поставить оценку</h5>
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="id_score" class="form-label">Оценка (1–10):</label>
+        {{ rating_form.score }}
+      </div>
+      <button type="submit" class="btn btn-warning">Оценить</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'login' %}">Войдите</a>, чтобы оставить отзыв или оценку.</p>
+  {% endif %}
+
+  <a href="{% url 'movie_list' %}" class="btn btn-secondary mt-4">Назад в каталог</a>
 </div>
-
-<h3>Reviews</h3>
-<ul>
-    {% for review in movie.reviews.all %}
-        <li><strong>{{ review.user.username }}</strong>: {{ review.text }}</li>
-    {% empty %}
-        <li>No reviews yet.</li>
-    {% endfor %}
-</ul>
-
-{% if user.is_authenticated %}
-<form method="post" class="mt-4">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Add Review</button>
-</form>
-{% else %}
-<p><a href="{% url 'login' %}">Log in</a> to leave a review.</p>
-{% endif %}
-
 {% endblock %}
-
