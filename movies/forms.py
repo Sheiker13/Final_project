@@ -25,3 +25,12 @@ class RatingForm(forms.ModelForm):
         widgets = {
             'score': forms.NumberInput(attrs={'min': 1, 'max': 10, 'class': 'form-control'}),
         }
+
+
+from django.contrib.auth.forms import UserCreationForm
+from .models import CustomUser
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ("username", "email")

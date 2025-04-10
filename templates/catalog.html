@@ -1,39 +1,41 @@
 
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
-<div class="container mt-4">
-    <h2>Movie Catalog</h2>
-    <form method="get" class="mb-3">
-        <select name="genre">
-            <option value="">All Genres</option>
-            {% for genre in genres %}
-                <option value="{{ genre.id }}" {% if genre.id|stringformat:"s" == selected_genre %}selected{% endif %}>{{ genre.name }}</option>
-            {% endfor %}
-        </select>
-        <select name="year">
-            <option value="">All Years</option>
-            {% for y in years %}
-                <option value="{{ y.year }}" {% if y.year|stringformat:"s" == selected_year %}selected{% endif %}>{{ y.year }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit">Filter</button>
-    </form>
+<h2>Каталог фильмов</h2>
 
-    <div class="row">
-        {% for movie in movies %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    {% if movie.image %}
-                        <img src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.title }}">
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ movie.title }}</h5>
-                        <p class="card-text">{{ movie.description|truncatechars:100 }}</p>
-                        <a href="{% url 'movie_detail' movie.pk %}" class="btn btn-primary">More</a>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+<form method="get" class="d-flex mb-3">
+  <select name="genre" class="form-select me-2" onchange="this.form.submit()">
+    <option value="">Все жанры</option>
+    {% for genre in genres %}
+      <option value="{{ genre.id }}" {% if genre.id|stringformat:"s" == selected_genre %}selected{% endif %}>
+        {{ genre.name }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <select name="sort" class="form-select me-2" onchange="this.form.submit()">
+    <option value="-release_date" {% if selected_sort == "-release_date" %}selected{% endif %}>Сначала новые</option>
+    <option value="release_date" {% if selected_sort == "release_date" %}selected{% endif %}>Сначала старые</option>
+    <option value="-ratings__score" {% if selected_sort == "-ratings__score" %}selected{% endif %}>По рейтингу ↓</option>
+    <option value="ratings__score" {% if selected_sort == "ratings__score" %}selected{% endif %}>По рейтингу ↑</option>
+  </select>
+</form>
+
+<div class="row">
+  {% for movie in movies %}
+    <div class="col-md-3 mb-4">
+      <div class="card h-100">
+        {% if movie.image %}
+          <img src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.title }}">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ movie.title }}</h5>
+          <p class="card-text">{{ movie.description|truncatechars:100 }}</p>
+          <p class="card-text"><strong>Rating:</strong> {{ movie.average_rating|default:"N/A" }}</p>
+          <a href="{% url 'movie_detail' movie.id %}" class="btn btn-sm btn-outline-primary">Подробнее</a>
+        </div>
+      </div>
     </div>
+  {% endfor %}
 </div>
 {% endblock %}

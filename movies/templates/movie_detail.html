@@ -15,7 +15,10 @@
       <h2>{{ movie.title }}</h2>
       <p class="text-muted">Год: {{ movie.release_date|date:"Y" }}</p>
       <p>{{ movie.description }}</p>
+<<<<<<< HEAD
 
+=======
+>>>>>>> e25a141 (Улучшил интерфейс)
       <p><strong>Жанры:</strong>
         {% for genre in movie.genres.all %}
           <span class="badge bg-secondary">{{ genre.name }}</span>
@@ -23,7 +26,10 @@
           <span>Жанры не указаны.</span>
         {% endfor %}
       </p>
+<<<<<<< HEAD
 
+=======
+>>>>>>> e25a141 (Улучшил интерфейс)
       <p><strong>Средняя оценка:</strong>
         {{ movie.ratings.all|average_rating|default:"-" }}/10
       </p>
@@ -47,6 +53,7 @@
       {{ review.text }}
     </div>
   {% empty %}
+<<<<<<< HEAD
     <p>Отзывов пока нет.</p>
   {% endfor %}
 
@@ -59,13 +66,31 @@
     </form>
 
     <h5 class="mt-4">Поставить оценку</h5>
+=======
+    <p>Пока нет отзывов.</p>
+  {% endfor %}
+
+  {% if user.is_authenticated %}
+    <h5 class="mt-4">Добавить отзыв</h5>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Добавить отзыв</button>
+    </form>
+
+    <h5 class="mt-4">Оценить фильм</h5>
+>>>>>>> e25a141 (Улучшил интерфейс)
     <form method="post">
       {% csrf_token %}
       <div class="mb-3">
         <label for="id_score" class="form-label">Оценка (1–10):</label>
         {{ rating_form.score }}
       </div>
+<<<<<<< HEAD
       <button type="submit" class="btn btn-warning">Оценить</button>
+=======
+      <button type="submit" class="btn btn-warning">Поставить оценку</button>
+>>>>>>> e25a141 (Улучшил интерфейс)
     </form>
   {% else %}
     <p><a href="{% url 'login' %}">Войдите</a>, чтобы оставить отзыв или оценку.</p>
