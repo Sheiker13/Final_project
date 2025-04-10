@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: Final_project
+    env: docker
+    plan: free
+    buildCommand: ""
+    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    preDeployCommand: python manage.py migrate
