@@ -11,11 +11,7 @@ urlpatterns = [
     path('accounts/logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('accounts/', include('movies.urls')),
     path('api/', include('movies.api_urls')),
-<<<<<<< HEAD
-    path('', include('movies.urls')),
-=======
     path('', lambda request: redirect('movie_list'), name='index'),
->>>>>>> e25a141 (Улучшил интерфейс)
 ]
 
 if settings.DEBUG:
