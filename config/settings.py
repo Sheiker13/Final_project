@@ -120,3 +120,5 @@ MIDDLEWARE = [
 ] + MIDDLEWARE + [
     'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
