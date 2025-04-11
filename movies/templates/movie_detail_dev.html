@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load movie_extras %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      {% if movie.image %}
+        <img src="{{ movie.image.url }}" alt="{{ movie.title }}" class="img-fluid rounded shadow">
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <h2>{{ movie.title }}</h2>
+      <p>{{ movie.description }}</p>
+      <p><strong>Release:</strong> {{ movie.release_date }}</p>
+      <p><strong>Genres:</strong>
+        {% for genre in movie.genres.all %}
+          {{ genre.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </p>
+      <p><strong>Average rating:</strong> <span id="avg-rating">{{ average_rating|default:"N/A" }}</span></p>
+
+      <div class="d-flex gap-2 mt-3 align-items-center">
+        <button class="btn btn-sm btn-outline-warning" id="fav-btn">
+          <span id="fav-star">{% if is_favorite %}★{% else %}☆{% endif %}</span>
+        </button>
+      </div>
+
+      {% if user.is_authenticated %}
+      <div class="mt-3 d-flex align-items-center gap-2">
+        {% for i in "12345678910"|make_list %}
+          <span class="rating-star" data-value="{{ i }}">★</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <hr class="my-4">
+
+  <h4>Отзывы</h4>
+  {% for review in movie.reviews.all %}
+    <div class="border p-2 mb-2 rounded">
+      <strong>{{ review.user.username }}</strong>
+      <small class="text-muted">{{ review.created_at|date:"d M Y" }}</small>
+      <p>{{ review.text }}</p>
+    </div>
+  {% empty %}
+    <p>Пока нет отзывов.</p>
+  {% endfor %}
+
+  {% if user.is_authenticated %}
+    <h5 class="mt-4">Оставить отзыв</h5>
+    <form class="mb-4" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-primary" type="submit">Добавить</button>
+    </form>
+  {% endif %}
+</div>
+
+<div id="alert-msg" class="alert alert-success position-fixed top-0 end-0 m-3 d-none" role="alert" style="z-index:9999;"></div>
+
+<style>
+  .rating-star {
+    font-size: 1.5rem;
+    color: black;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .rating-star.active {
+    color: gold;
+  }
+  #fav-star {
+    font-size: 1.5rem;
+    transition: transform 0.2s;
+  }
+</style>
+
+<script>
+const favBtn = document.getElementById("fav-btn");
+const favStar = document.getElementById("fav-star");
+const alertBox = document.getElementById("alert-msg");
+const csrfToken = '{{ csrf_token }}';
+
+favBtn?.addEventListener("click", async () => {
+  const res = await fetch("{% url 'toggle_favorite' movie.id %}", {
+    method: "POST",
+    headers: {
+      'X-CSRFToken': csrfToken,
+      'X-Requested-With': 'XMLHttpRequest'
+    },
+  });
+  const data = await res.json();
+  favStar.textContent = data.is_favorite ? '★' : '☆';
+  showAlert(data.is_favorite ? "Добавлено в избранное" : "Удалено из избранного");
+});
+
+function showAlert(message) {
+  alertBox.textContent = message;
+  alertBox.classList.remove("d-none");
+  setTimeout(() => alertBox.classList.add("d-none"), 2000);
+}
+
+const stars = document.querySelectorAll(".rating-star");
+stars?.forEach(star => {
+  star.addEventListener("click", async () => {
+    const value = star.getAttribute("data-value");
+    const res = await fetch("{% url 'rate_movie' movie.id %}", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: JSON.stringify({ score: value })
+    });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById("avg-rating").textContent = data.new_avg;
+      stars.forEach(s => s.classList.remove("active"));
+      for (let i = 0; i < value; i++) stars[i].classList.add("active");
+      showAlert("Оценка сохранена!");
+    }
+  });
+});
+</script>
+{% endblock %}

@@ -1,73 +1,505 @@
 [
   {
-    "model": "movies.customuser",
-    "pk": 101,
+    "model": "movies.genre",
+    "pk": 1,
     "fields": {
-      "username": "newuser",
-      "password": "pbkdf2_sha256$260000$test$hashhere",
-      "email": "newuser@example.com",
-      "is_moderator": false,
-      "is_superuser": false,
-      "is_staff": false,
-      "is_active": true,
-      "last_login": null,
-      "date_joined": "2025-04-08T02:31:51.109920"
+      "name": "Драма",
+      "created_at": "2025-04-11T05:31:18.864950",
+      "updated_at": "2025-04-11T05:31:18.864960"
     }
   },
   {
     "model": "movies.genre",
-    "pk": 101,
+    "pk": 2,
     "fields": {
-      "name": "Adventure",
-      "created_at": "2025-04-08T02:31:51.109928",
-      "updated_at": "2025-04-08T02:31:51.109930"
+      "name": "Комедия",
+      "created_at": "2025-04-11T05:31:18.864963",
+      "updated_at": "2025-04-11T05:31:18.864965"
+    }
+  },
+  {
+    "model": "movies.genre",
+    "pk": 3,
+    "fields": {
+      "name": "Боевик",
+      "created_at": "2025-04-11T05:31:18.864967",
+      "updated_at": "2025-04-11T05:31:18.864968"
+    }
+  },
+  {
+    "model": "movies.genre",
+    "pk": 4,
+    "fields": {
+      "name": "Триллер",
+      "created_at": "2025-04-11T05:31:18.864971",
+      "updated_at": "2025-04-11T05:31:18.864973"
+    }
+  },
+  {
+    "model": "movies.genre",
+    "pk": 5,
+    "fields": {
+      "name": "Фантастика",
+      "created_at": "2025-04-11T05:31:18.864976",
+      "updated_at": "2025-04-11T05:31:18.864979"
+    }
+  },
+  {
+    "model": "movies.genre",
+    "pk": 6,
+    "fields": {
+      "name": "Приключения",
+      "created_at": "2025-04-11T05:31:18.864983",
+      "updated_at": "2025-04-11T05:31:18.864986"
+    }
+  },
+  {
+    "model": "movies.genre",
+    "pk": 7,
+    "fields": {
+      "name": "Мелодрама",
+      "created_at": "2025-04-11T05:31:18.864990",
+      "updated_at": "2025-04-11T05:31:18.864993"
+    }
+  },
+  {
+    "model": "movies.genre",
+    "pk": 8,
+    "fields": {
+      "name": "Анимация",
+      "created_at": "2025-04-11T05:31:18.864998",
+      "updated_at": "2025-04-11T05:31:18.865000"
     }
   },
   {
     "model": "movies.movie",
-    "pk": 101,
+    "pk": 1,
     "fields": {
-      "title": "The New Journey",
-      "description": "An adventure test film.",
-      "release_date": "2023-03-10",
-      "image": "",
-      "created_at": "2025-04-08T02:31:51.109932",
-      "updated_at": "2025-04-08T02:31:51.110031",
+      "title": "Побег из Шоушенка",
+      "description": "История о надежде, дружбе и человеческой воле.",
+      "release_date": "1994-09-23",
       "genres": [
-        101
-      ]
+        1,
+        4
+      ],
+      "image": "posters/shawshank.jpg",
+      "created_at": "2025-04-11T05:31:18.865210",
+      "updated_at": "2025-04-11T05:31:18.865213"
     }
   },
   {
-    "model": "movies.review",
-    "pk": 101,
+    "model": "movies.movie",
+    "pk": 2,
     "fields": {
-      "user": 101,
-      "movie": 101,
-      "text": "Fantastic and inspiring!",
-      "created_at": "2025-04-08T02:31:51.110035",
-      "updated_at": "2025-04-08T02:31:51.110038"
+      "title": "Форрест Гамп",
+      "description": "Жизненный путь простого парня, изменившего мир.",
+      "release_date": "1994-07-06",
+      "genres": [
+        8,
+        1
+      ],
+      "image": "posters/forrest_gump.jpeg",
+      "created_at": "2025-04-11T05:31:18.865217",
+      "updated_at": "2025-04-11T05:31:18.865219"
     }
   },
   {
-    "model": "movies.rating",
-    "pk": 101,
+    "model": "movies.movie",
+    "pk": 3,
     "fields": {
-      "user": 101,
-      "movie": 101,
-      "score": 8,
-      "created_at": "2025-04-08T02:31:51.110041",
-      "updated_at": "2025-04-08T02:31:51.110044"
+      "title": "Начало",
+      "description": "Вор проникает в сны ради идеи.",
+      "release_date": "2010-07-16",
+      "genres": [
+        3,
+        4
+      ],
+      "image": "posters/inception.jpg",
+      "created_at": "2025-04-11T05:31:18.865231",
+      "updated_at": "2025-04-11T05:31:18.865234"
     }
   },
   {
-    "model": "movies.favoritemovie",
-    "pk": 101,
+    "model": "movies.movie",
+    "pk": 4,
     "fields": {
-      "user": 101,
-      "movie": 101,
-      "created_at": "2025-04-08T02:31:51.110047",
-      "updated_at": "2025-04-08T02:31:51.110049"
+      "title": "Интерстеллар",
+      "description": "Поиск нового дома для человечества.",
+      "release_date": "2014-11-07",
+      "genres": [
+        4,
+        5
+      ],
+      "image": "posters/interstellar.jpg",
+      "created_at": "2025-04-11T05:31:18.865241",
+      "updated_at": "2025-04-11T05:31:18.865244"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 5,
+    "fields": {
+      "title": "Темный рыцарь",
+      "description": "Бэтмен против Джокера.",
+      "release_date": "2008-07-18",
+      "genres": [
+        1,
+        7
+      ],
+      "image": "posters/dark_knight.jpg",
+      "created_at": "2025-04-11T05:31:18.865247",
+      "updated_at": "2025-04-11T05:31:18.865249"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 6,
+    "fields": {
+      "title": "Остров проклятых",
+      "description": "Детектив раскрывает тайны психбольницы.",
+      "release_date": "2010-02-19",
+      "genres": [
+        3,
+        6
+      ],
+      "image": "posters/shutter_island.jpg",
+      "created_at": "2025-04-11T05:31:18.865252",
+      "updated_at": "2025-04-11T05:31:18.865253"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 7,
+    "fields": {
+      "title": "1+1",
+      "description": "Дружба аристократа и помощника.",
+      "release_date": "2011-11-02",
+      "genres": [
+        3,
+        7
+      ],
+      "image": "posters/intouchables.jpg",
+      "created_at": "2025-04-11T05:31:18.865256",
+      "updated_at": "2025-04-11T05:31:18.865257"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 8,
+    "fields": {
+      "title": "Криминальное чтиво",
+      "description": "Гангстеры, любовь и насилие.",
+      "release_date": "1994-10-14",
+      "genres": [
+        2,
+        3
+      ],
+      "image": "posters/pulp_fiction.jpg",
+      "created_at": "2025-04-11T05:31:18.865262",
+      "updated_at": "2025-04-11T05:31:18.865264"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 9,
+    "fields": {
+      "title": "Аватар",
+      "description": "Мир Пандоры и борьба культур.",
+      "release_date": "2009-12-17",
+      "genres": [
+        4,
+        7
+      ],
+      "image": "posters/avatar.jpg",
+      "created_at": "2025-04-11T05:31:18.865267",
+      "updated_at": "2025-04-11T05:31:18.865269"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 10,
+    "fields": {
+      "title": "Гладиатор",
+      "description": "Генерал-раб-гладиатор в Риме.",
+      "release_date": "2000-05-05",
+      "genres": [
+        8,
+        5
+      ],
+      "image": "posters/gladiator.jpg",
+      "created_at": "2025-04-11T05:31:18.865272",
+      "updated_at": "2025-04-11T05:31:18.865274"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 11,
+    "fields": {
+      "title": "Матрица",
+      "description": "Мир — иллюзия. Хакер — избранный.",
+      "release_date": "1999-03-31",
+      "genres": [
+        1,
+        6
+      ],
+      "image": "posters/matrix.jpg",
+      "created_at": "2025-04-11T05:31:18.865277",
+      "updated_at": "2025-04-11T05:31:18.865278"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 12,
+    "fields": {
+      "title": "Хоббит: Нежданное путешествие",
+      "description": "Бильбо с гномами ищет дракона.",
+      "release_date": "2012-12-13",
+      "genres": [
+        5,
+        6
+      ],
+      "image": "posters/hobbit.jpg",
+      "created_at": "2025-04-11T05:31:18.865281",
+      "updated_at": "2025-04-11T05:31:18.865283"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 13,
+    "fields": {
+      "title": "Король Лев",
+      "description": "Симба возвращает себе трон.",
+      "release_date": "1994-06-15",
+      "genres": [
+        8,
+        3
+      ],
+      "image": "posters/lion_king.jpg",
+      "created_at": "2025-04-11T05:31:18.865285",
+      "updated_at": "2025-04-11T05:31:18.865287"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 14,
+    "fields": {
+      "title": "Титаник",
+      "description": "Любовь и трагедия на лайнере.",
+      "release_date": "1997-12-19",
+      "genres": [
+        2,
+        6
+      ],
+      "image": "posters/titanic.jpg",
+      "created_at": "2025-04-11T05:31:18.865289",
+      "updated_at": "2025-04-11T05:31:18.865291"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 15,
+    "fields": {
+      "title": "Человек-паук: Нет пути домой",
+      "description": "Мультивселенная и Питер Паркер.",
+      "release_date": "2021-12-17",
+      "genres": [
+        2,
+        4
+      ],
+      "image": "posters/spiderman.jpg",
+      "created_at": "2025-04-11T05:31:18.865293",
+      "updated_at": "2025-04-11T05:31:18.865295"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 16,
+    "fields": {
+      "title": "Доктор Стрэндж",
+      "description": "Магия и спасение миров.",
+      "release_date": "2016-10-25",
+      "genres": [
+        4
+      ],
+      "image": "posters/doctor_strange.jpg",
+      "created_at": "2025-04-11T05:31:18.865298",
+      "updated_at": "2025-04-11T05:31:18.865299"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 17,
+    "fields": {
+      "title": "Властелин колец: Братство кольца",
+      "description": "Путь Фродо к Роковой горе.",
+      "release_date": "2001-12-19",
+      "genres": [
+        3,
+        4
+      ],
+      "image": "posters/lord_of_rings.jpg",
+      "created_at": "2025-04-11T05:31:18.865302",
+      "updated_at": "2025-04-11T05:31:18.865304"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 18,
+    "fields": {
+      "title": "Коко",
+      "description": "Мальчик раскрывает тайну предков.",
+      "release_date": "2017-10-27",
+      "genres": [
+        8,
+        2
+      ],
+      "image": "posters/coco.jpg",
+      "created_at": "2025-04-11T05:31:18.865309",
+      "updated_at": "2025-04-11T05:31:18.865312"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 19,
+    "fields": {
+      "title": "Терминатор 2",
+      "description": "Робот защищает будущее.",
+      "release_date": "1991-07-03",
+      "genres": [
+        3,
+        4
+      ],
+      "image": "posters/terminator2.jpg",
+      "created_at": "2025-04-11T05:31:18.865317",
+      "updated_at": "2025-04-11T05:31:18.865320"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 20,
+    "fields": {
+      "title": "Зеленая миля",
+      "description": "Заключённый с даром исцеления.",
+      "release_date": "1999-12-10",
+      "genres": [
+        4,
+        7
+      ],
+      "image": "posters/green_mile.jpg",
+      "created_at": "2025-04-11T05:31:18.865332",
+      "updated_at": "2025-04-11T05:31:18.865333"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 21,
+    "fields": {
+      "title": "Веном",
+      "description": "Симбиот и журналист.",
+      "release_date": "2018-10-04",
+      "genres": [
+        4,
+        7
+      ],
+      "image": "posters/venom.jpg",
+      "created_at": "2025-04-11T05:31:18.865337",
+      "updated_at": "2025-04-11T05:31:18.865339"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 22,
+    "fields": {
+      "title": "Мстители: Финал",
+      "description": "Битва за судьбу Вселенной.",
+      "release_date": "2019-04-24",
+      "genres": [
+        1,
+        2
+      ],
+      "image": "posters/avengers_endgame.jpg",
+      "created_at": "2025-04-11T05:31:18.865342",
+      "updated_at": "2025-04-11T05:31:18.865343"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 23,
+    "fields": {
+      "title": "Джокер",
+      "description": "Становление легендарного злодея.",
+      "release_date": "2019-10-04",
+      "genres": [
+        2,
+        6
+      ],
+      "image": "posters/joker.jpg",
+      "created_at": "2025-04-11T05:31:18.865346",
+      "updated_at": "2025-04-11T05:31:18.865347"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 24,
+    "fields": {
+      "title": "Душа",
+      "description": "Музыкант и загробный путь.",
+      "release_date": "2020-10-11",
+      "genres": [
+        3,
+        4
+      ],
+      "image": "posters/soul.jpg",
+      "created_at": "2025-04-11T05:31:18.865350",
+      "updated_at": "2025-04-11T05:31:18.865352"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 25,
+    "fields": {
+      "title": "Стражи Галактики",
+      "description": "Герои спасают космос.",
+      "release_date": "2014-07-31",
+      "genres": [
+        4,
+        7
+      ],
+      "image": "posters/guardians.jpg",
+      "created_at": "2025-04-11T05:31:18.865354",
+      "updated_at": "2025-04-11T05:31:18.865356"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 26,
+    "fields": {
+      "title": "Опенгеймер",
+      "description": "Создание атомной бомбы.",
+      "release_date": "2023-07-21",
+      "genres": [
+        2,
+        4
+      ],
+      "image": "posters/oppenheimer.jpg",
+      "created_at": "2025-04-11T05:31:18.865359",
+      "updated_at": "2025-04-11T05:31:18.865360"
+    }
+  },
+  {
+    "model": "movies.movie",
+    "pk": 27,
+    "fields": {
+      "title": "Барби",
+      "description": "Поиск смысла в розовом мире.",
+      "release_date": "2023-07-20",
+      "genres": [
+        3,
+        5
+      ],
+      "image": "posters/barbie.jpg",
+      "created_at": "2025-04-11T05:31:18.865363",
+      "updated_at": "2025-04-11T05:31:18.865365"
     }
   }
 ]

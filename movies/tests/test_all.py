@@ -17,6 +17,7 @@ def test_movie_creation():
 def test_user_registration(client):
     response = client.post("/accounts/register/", {
         "username": "testuser",
+        "email": "testuser@example.com",
         "password1": "strongpass123",
         "password2": "strongpass123"
     })

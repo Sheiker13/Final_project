@@ -1,13 +1,20 @@
-
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block content %}
-<div class="container mt-5">
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Login</button>
-  </form>
+<div class="container d-flex flex-column align-items-center justify-content-center" style="min-height: 80vh;">
+    <h2 class="mb-4">Вход в аккаунт</h2>
+    <form method="post" class="w-100" style="max-width: 400px;">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input type="text" name="username" class="form-control rounded-pill bg-light border-0 px-4 py-2" placeholder="Логин" required>
+        </div>
+        <div class="mb-3">
+            <input type="password" name="password" class="form-control rounded-pill bg-light border-0 px-4 py-2" placeholder="Пароль" required>
+        </div>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-dark rounded-pill py-2">Войти</button>
+        </div>
+    </form>
+    <p class="my-3 text-center">или</p>
+    <a href="{% url 'register' %}" class="btn btn-light rounded-pill px-4 py-2 border text-muted">Зарегистрироваться</a>
 </div>
 {% endblock %}

@@ -1,49 +1,74 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
-<div class="container mt-4">
-  <h2 class="mb-4">Каталог фильмов</h2>
+<h2 class="mb-4">Каталог фильмов</h2>
 
-  <form method="get" class="row g-2 mb-4">
-    <div class="col-md-4">
-      <select name="genre" class="form-select">
-        <option value="">Все жанры</option>
-        {% for genre in genres %}
-          <option value="{{ genre.id }}" {% if genre.id|stringformat:"s" == selected_genre %}selected{% endif %}>{{ genre.name }}</option>
-        {% endfor %}
-      </select>
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label for="genre" class="form-label">Жанр</label>
+        <select name="genre" id="genre" class="form-select">
+            <option value="">Все жанры</option>
+            {% for genre in genres %}
+                <option value="{{ genre.id }}" {% if genre.id|stringformat:"s" == selected_genre %}selected{% endif %}>
+                    {{ genre.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="sort" class="form-label">Сортировка</label>
+        <select name="sort" id="sort" class="form-select">
+            <option value="-release_date" {% if selected_sort == "-release_date" %}selected{% endif %}>Сначала новые</option>
+            <option value="-average_rating" {% if selected_sort == "-average_rating" %}selected{% endif %}>По рейтингу</option>
+            <option value="title" {% if selected_sort == "title" %}selected{% endif %}>По алфавиту</option>
+        </select>
     </div>
     <div class="col-md-4">
-      <select name="year" class="form-select">
-        <option value="">Все годы</option>
-        {% for y in years %}
-          <option value="{{ y.year }}" {% if y.year|stringformat:"s" == selected_year %}selected{% endif %}>{{ y.year }}</option>
-        {% endfor %}
-      </select>
+        <label for="search" class="form-label">Поиск</label>
+        <input type="text" name="q" id="search" value="{{ search_query }}" class="form-control" placeholder="Название или описание">
     </div>
-    <div class="col-md-4">
-      <button type="submit" class="btn btn-primary w-100">Фильтровать</button>
+    <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-dark w-100 rounded-pill">Применить</button>
     </div>
-  </form>
+</form>
 
-  <div class="row">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
     {% for movie in movies %}
-      <div class="col-md-3 mb-4">
-        <div class="card h-100 shadow">
-          {% if movie.image %}
-            <img src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.title }}">
-          {% else %}
-            <img src="https://via.placeholder.com/300x450?text=No+Image" class="card-img-top" alt="No image">
-          {% endif %}
-          <div class="card-body">
-            <h5 class="card-title">{{ movie.title }}</h5>
-            <p class="card-text">{{ movie.description|truncatechars:100 }}</p>
-            <a href="{% url 'movie_detail' movie.pk %}" class="btn btn-outline-primary">Подробнее</a>
-          </div>
+    <div class="col">
+        <div class="card h-100 bg-dark text-white border-secondary shadow-sm">
+            <img src="{{ movie.image.url }}" class="card-img-top" style="height: 300px; object-fit: cover;" alt="{{ movie.title }}">
+
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div>
+                    <h6 class="card-title">{{ movie.title }}</h6>
+                    <p class="mb-2">
+                        {% if movie.average_rating %}
+                            ⭐ {{ movie.average_rating|floatformat:1 }}
+                        {% else %}
+                            Нет оценок
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <a href="{% url 'movie_detail' movie.pk %}" class="btn btn-sm btn-outline-light rounded-pill">
+                        <i class="bi bi-search"></i> Подробнее
+                    </a>
+
+                    <!-- ⭐ Кнопка избранного -->
+                    <form method="post" action="{% url 'toggle_favorite' movie.pk %}">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="btn btn-sm rounded-circle {% if movie.id in favorites %}btn-warning{% else %}btn-outline-warning{% endif %}"
+                                title="{% if movie.id in favorites %}Удалить из избранного{% else %}Добавить в избранное{% endif %}">
+                            <i class="{% if movie.id in favorites %}bi bi-star-fill{% else %}bi bi-star{% endif %}"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
     {% empty %}
-      <p>Фильмы не найдены.</p>
+    <p>Фильмы не найдены.</p>
     {% endfor %}
-  </div>
 </div>
 {% endblock %}

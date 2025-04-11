@@ -1,25 +1,138 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Movie Catalog</title>
+    <title>{% block title %}Movie Catalog{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap и иконки -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Стили для анимации иконки избранного -->
+    <style>
+        .favorite-btn i {
+            transition: transform 0.2s ease, color 0.2s ease;
+            font-size: 1.2rem;
+        }
+
+        .favorite-btn:hover i {
+            transform: scale(1.3);
+            color: gold;
+        }
+
+        .favorite-btn.filled i {
+            color: gold;
+        }
+    </style>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="/">Movie Catalog</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/movies/">Catalog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/admin/">Admin</a></li>
-                </ul>
-            </div>
+<body class="bg-light text-dark">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <div class="d-flex align-items-center gap-3">
+            <a class="navbar-brand" href="/">🎬 Movie Catalog</a>
+            <form action="{% url 'catalog' %}" method="get" class="d-flex align-items-center">
+                <input type="text" name="q" class="form-control form-control-sm rounded-pill px-3"
+                       placeholder="Поиск..." value="{{ search_query|default:'' }}" style="width: 200px;">
+                <button type="submit" class="btn btn-sm btn-outline-light ms-2 rounded-pill">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
         </div>
-    </nav>
-    <main class="container">
-        {% block content %}{% endblock %}
-    </main>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center gap-2">
+                <li class="nav-item"><a class="nav-link" href="{% url 'catalog' %}"><i class="bi bi-film"></i> Каталог</a></li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}"><i class="bi bi-person-circle"></i> Профиль</a></li>
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'logout' %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-outline-danger ms-2">
+                                <i class="bi bi-box-arrow-right"></i> Выход
+                            </button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right"></i> Вход</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}"><i class="bi bi-pencil-square"></i> Регистрация</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container">
+    {% block content %}{% endblock %}
+</main>
+
+<!-- Toast уведомление -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1055">
+  <div id="favorite-toast" class="toast align-items-center text-bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body" id="favorite-toast-message">
+        <!-- Сюда будет вставляться текст -->
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- AJAX избранное с toast -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const toastElement = document.getElementById("favorite-toast");
+  const toastMessage = document.getElementById("favorite-toast-message");
+  const toast = new bootstrap.Toast(toastElement);
+
+  document.querySelectorAll(".favorite-btn").forEach(button => {
+    button.addEventListener("click", async function (e) {
+      e.preventDefault();
+
+      const url = this.dataset.url;
+      const csrftoken = this.querySelector("[name=csrfmiddlewaretoken]").value;
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": csrftoken,
+            "X-Requested-With": "XMLHttpRequest"
+          }
+        });
+
+        const data = await response.json();
+        const icon = this.querySelector("i");
+
+        if (data.is_favorite) {
+          this.classList.add("filled");
+          icon.classList.remove("bi-star");
+          icon.classList.add("bi-star-fill");
+          toastMessage.textContent = "Добавлено в избранное";
+        } else {
+          this.classList.remove("filled");
+          icon.classList.remove("bi-star-fill");
+          icon.classList.add("bi-star");
+          toastMessage.textContent = "Удалено из избранного";
+        }
+
+        toast.show();
+
+      } catch (error) {
+        console.error("Ошибка при добавлении в избранное:", error);
+      }
+    });
+  });
+});
+</script>
+
 </body>
 </html>

@@ -1,11 +1,23 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 {% block content %}
-  <div class="container mt-5">
-    <h2>Register</h2>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary">Register</button>
+<div class="container d-flex flex-column align-items-center justify-content-center" style="min-height: 80vh;">
+    <h2 class="mb-4">Регистрация</h2>
+    <form method="post" class="w-100" style="max-width: 450px;">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="mb-3">
+                {% if field.errors %}
+                    <div class="text-danger small">{{ field.errors|striptags }}</div>
+                {% endif %}
+                {{ field|add_class:"form-control rounded-pill bg-light border-0 px-4 py-2" }}
+            </div>
+        {% endfor %}
+        <div class="d-grid">
+            <button type="submit" class="btn btn-dark rounded-pill py-2">Зарегистрироваться</button>
+        </div>
     </form>
-  </div>
+    <p class="my-3 text-center">или</p>
+    <a href="{% url 'login' %}" class="btn btn-outline-dark rounded-pill px-4 py-2">Войти</a>
+</div>
 {% endblock %}

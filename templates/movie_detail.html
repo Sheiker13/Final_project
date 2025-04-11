@@ -18,7 +18,7 @@
       <p><strong>Average rating:</strong> {{ movie.average_rating|default:"N/A" }}</p>
 
       <div class="d-flex gap-2 mt-3">
-        <a href="#" class="btn btn-outline-primary">Оценить</a>
+        <a href="#" class="btn btn-outline-primary w-100">Оценить</a>
         <a href="#" class="btn btn-outline-warning">Добавить в избранное</a>
       </div>
     </div>
@@ -39,20 +39,20 @@
 
 {% if user.is_authenticated %}
   <h5 class="mt-4">Оставить отзыв</h5>
-  <form method="post">
+  <form class="mb-4" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Добавить</button>
+    <button class="btn btn-primary" type="submit" class="btn btn-success">Добавить</button>
   </form>
 
   <h5 class="mt-4">Поставить оценку</h5>
-  <form method="post">
+  <form class="mb-4" method="post">
     {% csrf_token %}
     <div class="mb-3">
       <label for="id_score" class="form-label">Оценка (1–10):</label>
       {{ rating_form.score }}
     </div>
-    <button type="submit" class="btn btn-warning">Оценить</button>
+    <button class="btn btn-primary" type="submit" class="btn btn-warning">Оценить</button>
   </form>
 {% else %}
   <p><a href="{% url 'login' %}">Войдите</a>, чтобы оставить отзыв или оценку.</p>

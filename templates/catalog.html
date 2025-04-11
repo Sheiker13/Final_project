@@ -3,7 +3,7 @@
 {% block content %}
 <h2>Каталог фильмов</h2>
 
-<form method="get" class="d-flex mb-3">
+<form class="mb-4" method="get" class="d-flex mb-3">
   <select name="genre" class="form-select me-2" onchange="this.form.submit()">
     <option value="">Все жанры</option>
     {% for genre in genres %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser, Review
+from .models import CustomUser, Review, Rating
 
 
 class RegisterForm(UserCreationForm):
@@ -16,19 +16,19 @@ class ReviewForm(forms.ModelForm):
         model = Review
         fields = ['text']
 
-from .models import Rating
 
 class RatingForm(forms.ModelForm):
+    SCORE_CHOICES = [(i, str(i)) for i in range(1, 11)]
+
+    score = forms.ChoiceField(
+        choices=SCORE_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-select form-select-sm'})
+    )
+
     class Meta:
         model = Rating
         fields = ['score']
-        widgets = {
-            'score': forms.NumberInput(attrs={'min': 1, 'max': 10, 'class': 'form-control'}),
-        }
 
-
-from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
