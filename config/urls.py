@@ -14,7 +14,6 @@ urlpatterns = [
     path('', include('movies.urls')),
     path('api/', include('movies.api_urls')),
     path('metrics/', exports.ExportToDjangoView, name="prometheus-django-metrics"),
-    path('', lambda request: redirect('movie_list')),
 ]
 
 if settings.DEBUG:
